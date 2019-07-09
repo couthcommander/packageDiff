@@ -1,0 +1,11 @@
+Package: packageDiff
+Title: Compare R Package Differences
+Version: 0.1
+Authors@R:
+    person("Cole", "Beck", role = "aut",
+           email = "cole.beck@vumc.org",
+           comment = c(ORCID = "0000-0002-6849-6255"))
+Description: Extract package information and compare between versions.
+License: GPL (>= 2)
+Depends: R (>= 2.10)
+RoxygenNote: 6.1.1
