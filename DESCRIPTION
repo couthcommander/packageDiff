@@ -2,7 +2,7 @@ Package: packageDiff
 Title: Compare R Package Differences
 Version: 0.1
 Authors@R:
-    person("Cole", "Beck", role = "aut",
+    person("Cole", "Beck", role = c("aut","cre"),
            email = "cole.beck@vumc.org",
            comment = c(ORCID = "0000-0002-6849-6255"))
 Description: Extract package information and compare between versions.
