@@ -22,11 +22,11 @@
 #' @examples
 #' \dontrun{
 #' url <- 'https://cran.r-project.org/src/contrib/Archive/acepack/acepack_1.3-3.3.tar.gz'
-#' info <- packageInfo(url)
+#' info <- pkgInfo(url)
 #' }
 #' @export
 
-packageInfo <- function(pkg, leaveRemains = FALSE) {
+pkgInfo <- function(pkg, leaveRemains = FALSE) {
   package <- unzipPackage(pkg)
   bp <- basename(package)
   dn <- dirname(package)
@@ -70,7 +70,8 @@ packageInfo <- function(pkg, leaveRemains = FALSE) {
   obj <- vapply(le, function(z) is.function(e[[z]]), logical(1))
   fun <- names(obj[obj])
   var <- names(obj[!obj])
-  arg <- lapply(fun, function(z) methods::formalArgs(e[[z]]))
+#   arg <- lapply(fun, function(z) methods::formalArgs(e[[z]]))
+  arg <- lapply(fun, function(z) names(formals(e[[z]])))
   names(arg) <- fun
   # read namespace file
   nsf <- parseNamespaceFile(bp, dn)
@@ -81,6 +82,10 @@ packageInfo <- function(pkg, leaveRemains = FALSE) {
   patterns <- grep('Patterns', names(exp_list))
   pat_list <- unname(unlist(exp_list[patterns]))
   exp <- unname(unlist(exp_list[-patterns]))
+  if(nrow(nsf$S3methods)) {
+    s3_fun <- paste(nsf$S3methods[,1], nsf$S3methods[,2], sep = '.')
+    exp <- c(exp, s3_fun)
+  }
   if(length(pat_list)) {
     pat_fun <- fun[unlist(lapply(pat_list, grep, fun))]
     exp <- c(exp, pat_fun)
@@ -109,6 +114,6 @@ packageInfo <- function(pkg, leaveRemains = FALSE) {
     Data = ddf,
     documentation = doctxt
   )
-  class(x) <- 'packageInfo'
+  class(x) <- 'pkgInfo'
   x
 }

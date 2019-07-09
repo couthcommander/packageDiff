@@ -10,12 +10,12 @@
 #' @examples
 #' \dontrun{
 #' url <- 'https://cran.r-project.org/src/contrib/Archive/acepack/acepack_1.3-3.3.tar.gz'
-#' info <- packageInfo(url)
+#' info <- pkgInfo(url)
 #' print(info)
 #' }
 #' @export
 
-print.packageInfo <- function(x, ...) {
+print.pkgInfo <- function(x, ...) {
   defprint <- function(x) paste(utils::capture.output(print(x)), collapse = '\n')
   fun0 <- x$ImportedFunctions
   if(length(fun0)) {

@@ -6,7 +6,6 @@ Authors@R:
            email = "cole.beck@vumc.org",
            comment = c(ORCID = "0000-0002-6849-6255"))
 Description: Extract package information and compare between versions.
-Imports: methods
 License: GPL (>= 2)
 Depends: R (>= 2.10)
 RoxygenNote: 6.1.1
