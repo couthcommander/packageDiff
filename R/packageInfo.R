@@ -32,20 +32,20 @@ packageInfo <- function(pkg, leaveRemains = FALSE) {
   dn <- dirname(package)
   if(!leaveRemains) on.exit(unlink(dn, recursive = TRUE))
   ## description
-  pd <- packageDescription(bp, dn, c('Version', 'Imports', 'Suggests', 'Collate'))
+  pd <- utils::packageDescription(bp, dn, c('Version', 'Imports', 'Suggests', 'Collate'))
   vn <- pd$Version
   imp <- pd$Imports
   sug <- pd$Suggests
   coll <- pd$Collate
   ## data
-  dat <- data(package = bp, lib.loc = dn)
+  dat <- utils::data(package = bp, lib.loc = dn)
   dsn <- unname(dat[['results']][,'Item'])
   if(length(dsn)) {
     e <- new.env()
     # a vector will only have `ncol`
     ddf <- data.frame(data = dsn, nrow = NA, ncol = NA)
     for(i in seq_along(dsn)) {
-      do.call(data, list(dsn[i], package = bp, lib.loc = dn, envir = e))
+      do.call(utils::data, list(dsn[i], package = bp, lib.loc = dn, envir = e))
       dimval <- dim(e[[dsn[i]]])
       if(is.null(dimval)) {
         ddf[,3] <- length(e[[dsn[i]]])
@@ -70,7 +70,7 @@ packageInfo <- function(pkg, leaveRemains = FALSE) {
   obj <- vapply(le, function(z) is.function(e[[z]]), logical(1))
   fun <- names(obj[obj])
   var <- names(obj[!obj])
-  arg <- lapply(fun, function(z) formalArgs(e[[z]]))
+  arg <- lapply(fun, function(z) methods::formalArgs(e[[z]]))
   names(arg) <- fun
   # read namespace file
   nsf <- parseNamespaceFile(bp, dn)
@@ -94,7 +94,7 @@ packageInfo <- function(pkg, leaveRemains = FALSE) {
   ## documentation
   doc_files <- tools::list_files_with_type(file.path(package, 'man'), "docs", full.names = TRUE)
   doctxt <- lapply(doc_files, function(d) {
-    paste(paste(capture.output(tools::Rd2txt(d)), collapse = '\n'), '\n')
+    paste(paste(utils::capture.output(tools::Rd2txt(d)), collapse = '\n'), '\n')
   })
   names(doctxt) <- sub('.Rd', '', basename(doc_files))
   x <- list(

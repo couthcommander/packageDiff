@@ -14,10 +14,10 @@ unzipPackage <- function(x) {
   if(grepl('^https?:', x)) {
     url <- x
     x <- file.path(td, basename(x))
-    download.file(url, destfile = x, quiet = TRUE)
+    utils::download.file(url, destfile = x, quiet = TRUE)
   }
   xx <- sub('\\.tar\\.gz', '', basename(x))
   dir <- file.path(td, xx)
-  untar(x, exdir = dir)
+  utils::untar(x, exdir = dir)
   list.files(dir, full.names = TRUE)
 }

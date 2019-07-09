@@ -16,7 +16,7 @@
 #' @export
 
 print.packageInfo <- function(x, ...) {
-  defprint <- function(x) paste(capture.output(print(x)), collapse = '\n')
+  defprint <- function(x) paste(utils::capture.output(print(x)), collapse = '\n')
   fun0 <- x$ImportedFunctions
   if(length(fun0)) {
     f0out <- paste(fun0, collapse = '\n')
