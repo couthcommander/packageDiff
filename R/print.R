@@ -5,6 +5,7 @@
 #' Print its argument and return it invisibly.
 #'
 #' @param x A packageInfo object.
+#' @param doc Include documentation in output.
 #' @param \dots Additional parameters, unused at this time.
 #'
 #' @examples
@@ -15,13 +16,19 @@
 #' }
 #' @export
 
-print.pkgInfo <- function(x, ...) {
-  defprint <- function(x) paste(utils::capture.output(print(x)), collapse = '\n')
+print.pkgInfo <- function(x, doc = FALSE, ...) {
+  defprint <- function(x, ...) paste(utils::capture.output(print(x, ...)), collapse = '\n')
   fun0 <- x$ImportedFunctions
   if(length(fun0)) {
     f0out <- paste(fun0, collapse = '\n')
   } else {
     f0out <- NA
+  }
+  addlargs <- list(...)
+  if('width' %in% names(addlargs)) {
+    width <- getOption('width')
+    on.exit(options(width = width))
+    options(width = addlargs$width)
   }
   fun1 <- x$ExportedFunctions
   fun2 <- setdiff(x$AllFunctions, fun1)
@@ -29,8 +36,8 @@ print.pkgInfo <- function(x, ...) {
   fun2args <- vapply(x$FormalArgs[fun2], paste, character(1), collapse = '|', USE.NAMES = FALSE)
   f1 <- data.frame(name = fun1, arguments = fun1args)
   f2 <- data.frame(name = fun2, arguments = fun2args)
-  f1out <- defprint(f1)
-  f2out <- defprint(f2)
+  f1out <- defprint(f1, right = FALSE)
+  f2out <- defprint(f2, right = FALSE)
   dat <- defprint(x$Data)
   out <- sprintf("Package: %s
 Version: %s
@@ -54,6 +61,11 @@ Data:
     f2out,
     dat
   )
+  if(doc) {
+    xd <- unlist(x$documentation, use.names = FALSE)
+    xd <- paste(xd, collapse = '\n')
+    out <- paste(out, xd, sep = '\n')
+  }
   cat(out)
   invisible(x)
 }

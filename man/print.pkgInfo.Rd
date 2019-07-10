@@ -4,10 +4,12 @@
 \alias{print.pkgInfo}
 \title{Print Package Information}
 \usage{
-\method{print}{pkgInfo}(x, ...)
+\method{print}{pkgInfo}(x, doc = FALSE, ...)
 }
 \arguments{
 \item{x}{A packageInfo object.}
+
+\item{doc}{Include documentation in output.}
 
 \item{\dots}{Additional parameters, unused at this time.}
 }
