@@ -1,6 +1,8 @@
 # packageDiff
 Easily compare changes between package versions.
 
+## Hmisc is a massive package
+
 ```
 library(packageDiff)
 pkgDiff(pkgInfo('https://cran.r-project.org/src/contrib/Archive/Hmisc/Hmisc_4.1-1.tar.gz'),

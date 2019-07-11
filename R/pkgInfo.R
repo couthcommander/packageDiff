@@ -99,7 +99,7 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
   ## documentation
   doc_files <- tools::list_files_with_type(file.path(package, 'man'), "docs", full.names = TRUE)
   doctxt <- lapply(doc_files, function(d) {
-    paste(paste(utils::capture.output(tools::Rd2txt(d)), collapse = '\n'), '\n')
+    paste(paste(utils::capture.output(tools::Rd2txt(d, options = list(underline_titles = FALSE))), collapse = '\n'), '\n')
   })
   names(doctxt) <- sub('.Rd', '', basename(doc_files))
   x <- list(

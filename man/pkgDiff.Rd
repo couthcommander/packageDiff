@@ -4,7 +4,7 @@
 \alias{pkgDiff}
 \title{Package Diff}
 \usage{
-pkgDiff(a, b, doc = TRUE, width = 200)
+pkgDiff(a, b, doc = TRUE, width = 80)
 }
 \arguments{
 \item{a}{First package, a \sQuote{pkgInfo} object.}

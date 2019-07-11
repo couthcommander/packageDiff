@@ -36,9 +36,9 @@ print.pkgInfo <- function(x, doc = FALSE, ...) {
   fun2args <- vapply(x$FormalArgs[fun2], paste, character(1), collapse = '|', USE.NAMES = FALSE)
   f1 <- data.frame(name = fun1, arguments = fun1args)
   f2 <- data.frame(name = fun2, arguments = fun2args)
-  f1out <- defprint(f1, right = FALSE)
-  f2out <- defprint(f2, right = FALSE)
-  dat <- defprint(x$Data)
+  f1out <- defprint(f1, right = FALSE, row.names = FALSE)
+  f2out <- defprint(f2, right = FALSE, row.names = FALSE)
+  dat <- defprint(x$Data, row.names = FALSE)
   out <- sprintf("Package: %s
 Version: %s
 Imports: %s
