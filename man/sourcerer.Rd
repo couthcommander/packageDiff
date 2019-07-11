@@ -12,3 +12,6 @@ sourcerer(files)
 \description{
 Evaluate R scripts in protected environment.
 }
+\details{
+This may fail if Collate is incorrect.
+}

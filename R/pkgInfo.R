@@ -34,8 +34,8 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
   ## description
   pd <- utils::packageDescription(bp, dn, c('Version', 'Imports', 'Suggests', 'Collate'))
   vn <- pd$Version
-  imp <- pd$Imports
-  sug <- pd$Suggests
+  imp <- gsub('\n', ' ', pd$Imports)
+  sug <- gsub('\n', ' ', pd$Suggests)
   coll <- pd$Collate
   ## data
   dat <- utils::data(package = bp, lib.loc = dn)
