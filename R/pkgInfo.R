@@ -48,9 +48,11 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
       do.call(utils::data, list(dsn[i], package = bp, lib.loc = dn, envir = e))
       dimval <- dim(e[[dsn[i]]])
       if(is.null(dimval)) {
-        ddf[,3] <- length(e[[dsn[i]]])
+        ddf[i,3] <- length(e[[dsn[i]]])
+      } else if(length(dimval) == 2) {
+        ddf[i,2:3] <- dimval
       } else {
-        ddf[,2:3] <- dimval
+        ddf[i,2:3] <- c(dimval[1], paste(dimval[-1], collapse = 'x'))
       }
     }
     rm(e)
