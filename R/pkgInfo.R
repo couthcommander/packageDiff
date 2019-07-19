@@ -100,8 +100,10 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
   imp_fun <- imp_fun[order(grepl(':', imp_fun), imp_fun)]
   ## documentation
   doc_files <- tools::list_files_with_type(file.path(package, 'man'), "docs", full.names = TRUE)
+  docmac <- tools::loadPkgRdMacros(package)
   doctxt <- lapply(doc_files, function(d) {
-    paste(paste(utils::capture.output(tools::Rd2txt(d, options = list(underline_titles = FALSE))), collapse = '\n'), '\n')
+    rd <- tools::parse_Rd(d, macros = docmac)
+    paste(paste(utils::capture.output(tools::Rd2txt(rd, options = list(underline_titles = FALSE))), collapse = '\n'), '\n')
   })
   names(doctxt) <- sub('.Rd', '', basename(doc_files))
   x <- list(

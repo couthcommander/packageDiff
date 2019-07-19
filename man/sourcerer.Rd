@@ -4,10 +4,12 @@
 \alias{sourcerer}
 \title{Extract Package Information}
 \usage{
-sourcerer(files)
+sourcerer(files, envir = NULL)
 }
 \arguments{
 \item{files}{Vector of file names.}
+
+\item{envir}{Default environment.}
 }
 \description{
 Evaluate R scripts in protected environment.

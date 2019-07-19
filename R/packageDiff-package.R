@@ -10,6 +10,6 @@
 #'
 #' @import diffr
 #' @importFrom htmlwidgets createWidget
-#' @importFrom tools list_files_with_type Rd2txt
+#' @importFrom tools list_files_with_type loadPkgRdMacros parse_Rd Rd2txt
 #' @importFrom utils capture.output data download.file packageDescription untar
 "_PACKAGE"

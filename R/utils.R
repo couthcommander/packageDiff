@@ -14,49 +14,56 @@ suppresser <- function(cmd) {
 #' This may fail if Collate is incorrect.
 #'
 #' @param files Vector of file names.
+#' @param envir Default environment.
 sourcerer <- function(files, envir = NULL) {
   if(is.null(envir)) {
     e <- new.env()
   } else {
     e <- envir
   }
+  badfiles <- character(0)
   for(i in seq_along(files)) {
     f <- files[i]
     if(file.exists(f)) {
-      cnt <- 1
+      badlist <- character(0)
       repeat {
-        # r is NULL if no error occurs
+        # r is NULL if no error occurs or error could not be prevented
         # r equals 1 if error was prevented
         r <- tryCatch(suppresser(sys.source(f, e, keep.source = FALSE)), error = function(er) {
           if(grepl("could not find function", er)) {
             noFun <- sub('.*could not find function "(.*)".*', '\\1', er)
-            # find function in all files
-            opts <- files[seq(i, length(files))]
-            file_data <- lapply(opts, scan, what = '', sep = '\n', quiet = TRUE)
-            ix <- grep(sprintf('%s[-<= ]+function', noFun), file_data)
-            found <- FALSE
-            if(length(ix) == 0) stop(er)
-            for(j in ix) {
-              ee <- sourcerer(opts[j], e)
-              if(is.environment(ee)) {
-                if(noFun %in% ls(envir = ee)) {
-                  e <- ee
-                  found <- TRUE
-                  break
-                }
-              }
-            }
-            if(!found) stop(er)
+            e[[noFun]] <- function(...) NULL
+            badlist[length(badlist)+1] <<- noFun
+          } else if(grepl("object .* not found", er)) {
+            noObj <- sub(".*object '(.*)' not found.*", '\\1', er)
+            e[[noObj]] <- function(...) NULL
+            badlist[length(badlist)+1] <<- noObj
           } else {
-            stop(er)
+            badfiles[length(badfiles)+1] <<- f
+            return(NULL)
           }
           1
         })
         if(is.null(r)) break
-        cnt <- cnt + 1
-        if(cnt > 50) stop('failed to source R code, perhaps Collate is broken')
+      }
+      # remove from environment
+      if(length(badlist)) {
+        rm(list = badlist, envir = e)
       }
     }
+  }
+  fails <- logical(length(badfiles))
+  for(i in seq_along(badfiles)) {
+    pd <- parse(badfiles[i])
+    for(j in seq_along(pd)) {
+      tryCatch(eval(pd[j], envir = e), error = function(er) {
+        fails[i] <<- TRUE
+      })
+    }
+  }
+  badfiles <- basename(badfiles[fails])
+  if(length(badfiles)) {
+    warning(sprintf('some files partially failed to parse: %s', paste(badfiles, collapse = ',')))
   }
   e
 }
