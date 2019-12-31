@@ -36,21 +36,23 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
   vn <- pd$Version
   imp <- gsub('\n', ' ', pd$Imports)
   # imported packages should be loaded
-  toload <- sub(' .*', '', strsplit(imp, ",[ ]?")[[1]])
-  srchpth <- basename(searchpaths())
-  toload <- setdiff(toload, srchpth)
-  for(i in seq_along(toload)) {
-    suppressMessages(didload <- require(toload[i], character.only = TRUE))
-    if(!didload) {
-      warning(sprintf('imported package failed to load: %s', toload[i]))
+  if(!is.na(imp)) {
+    toload <- sub(' .*', '', strsplit(imp, ",[ ]?")[[1]])
+    srchpth <- basename(searchpaths())
+    toload <- setdiff(toload, srchpth)
+    for(i in seq_along(toload)) {
+      suppressMessages(didload <- require(toload[i], character.only = TRUE))
+      if(!didload) {
+        warning(sprintf('imported package failed to load: %s', toload[i]))
+      }
     }
+    tounload <- setdiff(basename(searchpaths()), srchpth)
+    on.exit({
+      for(i in seq_along(tounload)) {
+        detach(paste0('package:', tounload[i]), character.only = TRUE)
+      }
+    }, add = TRUE)
   }
-  tounload <- setdiff(basename(searchpaths()), srchpth)
-  on.exit({
-    for(i in seq_along(tounload)) {
-      detach(paste0('package:', tounload[i]), character.only = TRUE)
-    }
-  }, add = TRUE)
   sug <- gsub('\n', ' ', pd$Suggests)
   coll <- pd$Collate
   ## data
