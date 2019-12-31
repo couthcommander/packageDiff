@@ -2,6 +2,7 @@
 #'
 #' Suppress messages and warnings.
 #'
+#' @keywords internal
 #' @param cmd R command to run.
 suppresser <- function(cmd) {
   suppressMessages(suppressWarnings(cmd))
@@ -13,6 +14,7 @@ suppresser <- function(cmd) {
 #'
 #' This may fail if Collate is incorrect.
 #'
+#' @keywords internal
 #' @param files Vector of file names.
 #' @param envir Default environment.
 sourcerer <- function(files, envir = NULL) {

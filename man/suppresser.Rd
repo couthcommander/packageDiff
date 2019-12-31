@@ -12,3 +12,4 @@ suppresser(cmd)
 \description{
 Suppress messages and warnings.
 }
+\keyword{internal}
