@@ -8,6 +8,24 @@
 \description{
 Extract package information and compare between versions.
 }
+\details{
+This package is experimental. Please submit bugs to
+\url{https://github.com/couthcommander/packageDiff}.
+}
+\examples{
+\dontrun{
+a <- pkgInfo('https://cran.r-project.org/src/contrib/Archive/yaml/yaml_2.1.18.tar.gz')
+b <- pkgInfo('https://cran.r-project.org/src/contrib/Archive/yaml/yaml_2.1.19.tar.gz')
+pkgDiff(a, b)
+}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/couthcommander/packageDiff}
+}
+
+}
 \author{
 Cole Beck \email{cole.beck@vumc.org}
 

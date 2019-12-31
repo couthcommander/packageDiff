@@ -7,7 +7,7 @@ suppresser <- function(cmd) {
   suppressMessages(suppressWarnings(cmd))
 }
 
-#' Extract Package Information
+#' Source Many R Scripts
 #'
 #' Evaluate R scripts in protected environment.
 #'

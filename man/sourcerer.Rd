@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{sourcerer}
 \alias{sourcerer}
-\title{Extract Package Information}
+\title{Source Many R Scripts}
 \usage{
 sourcerer(files, envir = NULL)
 }
