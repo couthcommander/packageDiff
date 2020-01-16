@@ -11,6 +11,13 @@
 #'
 #' @return \sQuote{diffr} object is open in browser
 #'
+#' @examples
+#' tar1 <- system.file("examples", "yaml_2.1.18.tar.gz", package = "packageDiff")
+#' tar2 <- system.file("examples", "yaml_2.1.19.tar.gz", package = "packageDiff")
+#' a <- pkgInfo(tar1)
+#' b <- pkgInfo(tar2)
+#' pkgDiff(a, b)
+#'
 #' @export
 
 pkgDiff <- function(a, b, doc = TRUE, width = 80) {

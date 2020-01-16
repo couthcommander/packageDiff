@@ -7,6 +7,10 @@
 #'
 #' @return List of files extracted.
 #'
+#' @examples
+#' tarfile <- system.file("examples", "acepack_1.3-3.3.tar.gz", package = "packageDiff")
+#' info <- unzipPackage(tarfile)
+#'
 #' @export
 
 unzipPackage <- function(x) {

@@ -30,7 +30,9 @@ This function extracts information from an R package.
 Generate package information from its build file.
 }
 \examples{
-\dontrun{
+tarfile <- system.file("examples", "acepack_1.3-3.3.tar.gz", package = "packageDiff")
+info <- pkgInfo(tarfile)
+\donttest{
 url <- 'https://cran.r-project.org/src/contrib/Archive/acepack/acepack_1.3-3.3.tar.gz'
 info <- pkgInfo(url)
 }

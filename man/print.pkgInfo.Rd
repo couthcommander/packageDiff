@@ -20,7 +20,9 @@ Print method for \sQuote{packageInfo} class.
 Print its argument and return it invisibly.
 }
 \examples{
-\dontrun{
+tarfile <- system.file("examples", "acepack_1.3-3.3.tar.gz", package = "packageDiff")
+pkgInfo(tarfile)
+\donttest{
 url <- 'https://cran.r-project.org/src/contrib/Archive/acepack/acepack_1.3-3.3.tar.gz'
 info <- pkgInfo(url)
 print(info)

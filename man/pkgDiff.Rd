@@ -24,3 +24,11 @@ This function compares version changes within packages.
 \details{
 Generate diffs between package information.
 }
+\examples{
+tar1 <- system.file("examples", "yaml_2.1.18.tar.gz", package = "packageDiff")
+tar2 <- system.file("examples", "yaml_2.1.19.tar.gz", package = "packageDiff")
+a <- pkgInfo(tar1)
+b <- pkgInfo(tar2)
+pkgDiff(a, b)
+
+}

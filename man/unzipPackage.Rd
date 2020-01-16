@@ -16,3 +16,8 @@ List of files extracted.
 \description{
 Untar an R package into a temp directory.
 }
+\examples{
+tarfile <- system.file("examples", "acepack_1.3-3.3.tar.gz", package = "packageDiff")
+info <- unzipPackage(tarfile)
+
+}
