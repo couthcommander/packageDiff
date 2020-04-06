@@ -1,7 +1,7 @@
 Package: packageDiff
 Title: Compare R Package Differences
-Version: 0.1
-Date: 2019-12-31
+Version: 0.2
+Date: 2020-04-06
 Authors@R:
     person("Cole", "Beck", role = c("aut","cre"),
            email = "cole.beck@vumc.org",

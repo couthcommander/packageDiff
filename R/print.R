@@ -6,6 +6,10 @@
 #'
 #' @param x A packageInfo object.
 #' @param doc Include documentation in output.
+#' @param src Include src files in output.
+#' @param vignettes Include vignette files in output.
+#' @param tests Include test files in output.
+#' @param demo Include demo files in output.
 #' @param \dots Additional parameters, unused at this time.
 #'
 #' @examples
@@ -18,7 +22,7 @@
 #' }
 #' @export
 
-print.pkgInfo <- function(x, doc = FALSE, ...) {
+print.pkgInfo <- function(x, doc = FALSE, src = FALSE, vignettes = FALSE, tests = FALSE, demo = FALSE, ...) {
   defprint <- function(x, ...) paste(utils::capture.output(print(x, ...)), collapse = '\n')
   fun0 <- x$ImportedFunctions
   if(length(fun0)) {
@@ -66,6 +70,38 @@ Data:
   if(doc) {
     xd <- unlist(x$documentation, use.names = FALSE)
     xd <- paste(xd, collapse = '\n')
+    out <- paste(out, xd, sep = '\n')
+  }
+  if(src) {
+    xd <- unlist(x$source, use.names = FALSE)
+    if(length(xd) > 1L || !is.na(xd)) {
+      xd <- sprintf("##### %s #####\n%s", names(x$source), xd)
+    }
+    xd <- paste(c('Src directory:', xd, ''), collapse = '\n')
+    out <- paste(out, xd, sep = '\n')
+  }
+  if(vignettes) {
+    xd <- unlist(x$vignettes, use.names = FALSE)
+    if(length(xd) > 1L || !is.na(xd)) {
+      xd <- sprintf("##### %s #####\n%s", names(x$vignettes), xd)
+    }
+    xd <- paste(c('Vignettes directory:', xd, ''), collapse = '\n')
+    out <- paste(out, xd, sep = '\n')
+  }
+  if(tests) {
+    xd <- unlist(x$tests, use.names = FALSE)
+    if(length(xd) > 1L || !is.na(xd)) {
+      xd <- sprintf("##### %s #####\n%s", names(x$tests), xd)
+    }
+    xd <- paste(c('Tests directory:', xd, ''), collapse = '\n')
+    out <- paste(out, xd, sep = '\n')
+  }
+  if(demo) {
+    xd <- unlist(x$demo, use.names = FALSE)
+    if(length(xd) > 1L || !is.na(xd)) {
+      xd <- sprintf("##### %s #####\n%s", names(x$demo), xd)
+    }
+    xd <- paste(c('Demo directory:', xd, ''), collapse = '\n')
     out <- paste(out, xd, sep = '\n')
   }
   cat(out)

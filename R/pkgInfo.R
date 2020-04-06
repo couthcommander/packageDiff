@@ -18,6 +18,10 @@
 #' \item{FormalArgs}{Function arguments}
 #' \item{Data}{Dimension information on data sets}
 #' \item{documentation}{Full package documentation}
+#' \item{source}{Files in src directory}
+#' \item{vignettes}{Files in vignettes directory}
+#' \item{tests}{Files in tests directory}
+#' \item{demo}{Files in demo directory}
 #'
 #' @examples
 #' tarfile <- system.file("examples", "acepack_1.3-3.3.tar.gz", package = "packageDiff")
@@ -126,6 +130,22 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
     paste(paste(utils::capture.output(tools::Rd2txt(rd, options = list(underline_titles = FALSE))), collapse = '\n'), '\n')
   })
   names(doctxt) <- sub('.Rd', '', basename(doc_files))
+  ## src
+  src_patt <- "[.](c|cc|cpp|f|f90|f95|m|mm|h)$"
+  src_files <- list.files(file.path(package, 'src'), pattern = src_patt, full.names = TRUE, recursive = TRUE, ignore.case = TRUE)
+  srctxt <- scanner(src_files) %!% NA
+  ## vignettes
+  vign_files <- lfwtr(file.path(package, 'vignettes'), "vignette")
+  vigntxt <- scanner(vign_files) %!% NA
+  ## tests
+  test_files <- lfwtr(file.path(package, 'tests'), "code")
+  testtxt <- scanner(test_files) %!% NA
+  ## demo
+  demo_files <- lfwtr(file.path(package, 'demo'), "demo")
+  demotxt <- scanner(demo_files) %!% NA
+  # potential directories to check
+  # exec, exclude binary
+  # inst, exclude binary
   x <- list(
     Package = bp,
     Version = vn,
@@ -136,7 +156,11 @@ pkgInfo <- function(pkg, leaveRemains = FALSE) {
     AllFunctions = fun,
     FormalArgs = arg,
     Data = ddf,
-    documentation = doctxt
+    documentation = doctxt,
+    source = srctxt,
+    vignettes = vigntxt,
+    tests = testtxt,
+    demo = demotxt
   )
   class(x) <- 'pkgInfo'
   x

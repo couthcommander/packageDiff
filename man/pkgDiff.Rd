@@ -4,7 +4,8 @@
 \alias{pkgDiff}
 \title{Package Diff}
 \usage{
-pkgDiff(a, b, doc = TRUE, width = 80)
+pkgDiff(a, b, doc = TRUE, src = TRUE, vignettes = TRUE,
+  tests = TRUE, demo = TRUE, width = 80)
 }
 \arguments{
 \item{a}{First package, a \sQuote{pkgInfo} object.}
@@ -12,6 +13,14 @@ pkgDiff(a, b, doc = TRUE, width = 80)
 \item{b}{Second package, a \sQuote{pkgInfo} object.}
 
 \item{doc}{Include documentation in diff output.}
+
+\item{src}{Include src files in diff output}
+
+\item{vignettes}{Include vignette files in diff output}
+
+\item{tests}{Include test files in diff output}
+
+\item{demo}{Include demo files in diff output}
 
 \item{width}{Output width.}
 }

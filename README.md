@@ -17,3 +17,11 @@ library(packageDiff)
 pkgDiff(pkgInfo('https://cran.r-project.org/src/contrib/Archive/Hmisc/Hmisc_4.1-1.tar.gz'),
         pkgInfo('https://cran.r-project.org/src/contrib/Archive/Hmisc/Hmisc_4.2-0.tar.gz'))
 ```
+
+## ggplot2 has lots of magic
+
+```
+library(packageDiff)
+pkgDiff(pkgInfo('https://cran.r-project.org/src/contrib/Archive/ggplot2/ggplot2_3.1.0.tar.gz'),
+        pkgInfo('https://cran.r-project.org/src/contrib/Archive/ggplot2/ggplot2_3.2.0.tar.gz'))
+```

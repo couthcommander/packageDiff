@@ -4,12 +4,21 @@
 \alias{print.pkgInfo}
 \title{Print Package Information}
 \usage{
-\method{print}{pkgInfo}(x, doc = FALSE, ...)
+\method{print}{pkgInfo}(x, doc = FALSE, src = FALSE,
+  vignettes = FALSE, tests = FALSE, demo = FALSE, ...)
 }
 \arguments{
 \item{x}{A packageInfo object.}
 
 \item{doc}{Include documentation in output.}
+
+\item{src}{Include src files in output.}
+
+\item{vignettes}{Include vignette files in output.}
+
+\item{tests}{Include test files in output.}
+
+\item{demo}{Include demo files in output.}
 
 \item{\dots}{Additional parameters, unused at this time.}
 }

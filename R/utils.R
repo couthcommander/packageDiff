@@ -69,3 +69,50 @@ sourcerer <- function(files, envir = NULL) {
   }
   e
 }
+
+#' Scan List of Text Files
+#'
+#' Store text file as character string
+#'
+#' @keywords internal
+#' @param file the names of files to read.
+scanner <- function(files, full.names = FALSE) {
+  d <- lapply(files, function(t) {
+    paste(scan(t, '', sep = '\n', quiet = TRUE), collapse = "\n")
+  })
+  if(!full.names) {
+    files <- basename(files)
+  }
+  names(d) <- tools::file_path_sans_ext(files)
+  d
+}
+
+#' Set or Replace
+#'
+#' Set or replace empty
+#'
+#' @keywords internal
+#' @name setOrReplace
+#' @param lhs thing to check
+#' @param rhs thing to replace
+`%!%` <- function(lhs, rhs) {
+  if(length(lhs) == 0L) {
+    rhs
+  } else {
+    lhs
+  }
+}
+
+#' Recursively List Files With Type
+#'
+#' List files with type with recursive support
+#'
+#' @keywords internal
+#' @param dir a character string with the path name to a directory.
+#' @param \dots Additional arguments, passed to \code{\link{list_files_with_type}}.
+lfwtr <- function(dir, ...) {
+  lf1 <- list.files(dir, full.names = TRUE, recursive = TRUE, include.dirs = TRUE)
+  lf2 <- list.files(dir, full.names = TRUE, recursive = TRUE)
+  dir_list <- c(dir, setdiff(lf1, lf2))
+  unlist(lapply(dir_list, tools::list_files_with_type, ...))
+}

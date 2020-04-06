@@ -7,6 +7,10 @@
 #' @param a First package, a \sQuote{pkgInfo} object.
 #' @param b Second package, a \sQuote{pkgInfo} object.
 #' @param doc Include documentation in diff output.
+#' @param src Include src files in diff output
+#' @param vignettes Include vignette files in diff output
+#' @param tests Include test files in diff output
+#' @param demo Include demo files in diff output
 #' @param width Output width.
 #'
 #' @return \sQuote{diffr} object is open in browser
@@ -20,13 +24,14 @@
 #'
 #' @export
 
-pkgDiff <- function(a, b, doc = TRUE, width = 80) {
+pkgDiff <- function(a, b, doc = TRUE, src = TRUE, vignettes = TRUE, tests = TRUE, demo = TRUE, width = 80) {
   addBreaks <- function(s, maxWidth = 80) {
     s <- sub('[ ]+$', '', s)
     ix <- which(nchar(s) > maxWidth)
     if(length(ix)) {
       loc <- gregexpr('[| ]', s[ix])
       mrk <- lapply(loc, function(i) {
+        if(length(i) == 1L && i == -1) return(NULL)
         vapply(seq_len(floor(max(i) / maxWidth)), function(j) { rev(i[i < j * maxWidth])[1] }, numeric(1))
       })
       # add newline break
@@ -43,8 +48,8 @@ pkgDiff <- function(a, b, doc = TRUE, width = 80) {
     }
     s
   }
-  a0 <- capture.output(print(a, doc, width = 1000))
-  b0 <- capture.output(print(b, doc, width = 1000))
+  a0 <- capture.output(print(a, doc, src, vignettes, tests, demo, width = 1000))
+  b0 <- capture.output(print(b, doc, src, vignettes, tests, demo, width = 1000))
   a1 <- paste(addBreaks(a0, width), collapse = '\n')
   b1 <- paste(addBreaks(b0, width), collapse = '\n')
   x <- list(contextSize = 3, minJumpSize = 10, wordWrap = TRUE, f1 = a1, f2 = b1)

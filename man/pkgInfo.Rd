@@ -22,6 +22,10 @@ pkgInfo(pkg, leaveRemains = FALSE)
 \item{FormalArgs}{Function arguments}
 \item{Data}{Dimension information on data sets}
 \item{documentation}{Full package documentation}
+\item{source}{Files in src directory}
+\item{vignettes}{Files in vignettes directory}
+\item{tests}{Files in tests directory}
+\item{demo}{Files in demo directory}
 }
 \description{
 This function extracts information from an R package.
